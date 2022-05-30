@@ -1,9 +1,24 @@
 import React from 'react'
 
 const VerViaje = () => {
+
+
+  const Api = "https://api-react-firebase.herokuapp.com/api/reservations"
+  let dataAPI = []
+
+  React.useEffect(async () => {
+    try {
+      const response = await fetch(Api)
+      const data = await response.json()
+      dataAPI = data
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
   return (
     <div className="contenedor-verviaje">
-      <h1><i class="fas fa-user-check"></i> USUARIOS</h1>
+      <h1><i className="fas fa-user-check"></i> USUARIOS</h1>
       <div className="contenedor-tabla">
         <table class="table">
           <thead class="thead-dark">
@@ -20,37 +35,28 @@ const VerViaje = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Jessica Lilian Becerra</td>
-              <td>4</td>
-              <td>Canada</td>
-              <td>Ciudad de Mexico</td>
-              <td>Business</td>
-              <td>2021</td>
-              <td>2024</td>
-              <td>
-                <button type='button' className="boton-editar"><i class="fas fa-edit"></i></button>
-              </td>                                    
-              <td>
-                <button type='button' className="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jessica Lilian Becerra</td>
-              <td>4</td>
-              <td>Canada</td>
-              <td>Ciudad de Mexico</td>
-              <td>Business</td>
-              <td>2021</td>
-              <td>2024</td>
-              <td>
-                <button type='button' className="boton-editar"><i class="fas fa-edit"></i></button>
-              </td>                                    
-              <td>
-                <button type='button' className="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
-              </td>
-            </tr>
-          </tbody>    
+            {
+              dataAPI.map((index, data) => {
+                return (
+                  <tr key={index}>
+                    <td>{data.name}</td>
+                    <td>{data.cantidad}</td>
+                    <td>{data.origen}</td>
+                    <td>{data.destino}</td>
+                    <td>Business</td>
+                    <td>2021</td>
+                    <td>2024</td>
+                    <td>
+                      <button type='button' className="boton-editar"><i class="fas fa-edit"></i></button>
+                    </td>
+                    <td>
+                      <button type='button' className="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
         </table>
       </div>
     </div>
