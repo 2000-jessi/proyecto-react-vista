@@ -8,7 +8,8 @@ const VerViaje = () => {
 
 
   const [loading, setLoading] = React.useState(true)
-  const [editing, setEditing] = React.useState(true)
+  const [editing, setEditing] = React.useState(false)
+  const [statesValues, setStatesValues] = React.useState({})
   const [dataAPI, setDataAPI] = React.useState([])
 
   React.useEffect(() => {
@@ -24,6 +25,11 @@ const VerViaje = () => {
     }
     getData()
   }, [])
+
+  const editarRegistro = (data) => {
+    setEditing(true)
+    setStatesValues(data)
+  }
 
   return (
     <div className="contenedor-verviaje">
@@ -57,7 +63,13 @@ const VerViaje = () => {
                     <td>{data.fechaIda}</td>
                     <td>{data.fechaVuelta}</td>
                     <td>
-                      <button type='button' className="boton-editar"><i className="fas fa-edit"></i></button>
+                      <button
+                        type='button'
+                        className="boton-editar"
+                        onClick={() => { editarRegistro(data) }}
+                      >
+                        <i className="fas fa-edit"></i>
+                      </button>
                     </td>
                     <td>
                       <button type='button' className="boton-eliminar"><i className="fas fa-trash-alt"></i></button>
@@ -71,7 +83,15 @@ const VerViaje = () => {
       </div>
       <div>
       {
-        editing && <Form />
+        editing && <Form
+          method={"POST"}
+          p_nombreCompleto={statesValues.nombre}
+          p_cantidad={statesValues.cantidadPersonas}
+          p_origen={statesValues.origen}
+          p_destino={statesValues.destino}
+          p_clase={statesValues.clase}
+          p_fechaIda={Date.parse(statesValues.fechaIda)}
+          p_fechaVuelta={Date.parse(statesValues.fechaIda)} />
       }
     </div>
     </div>
