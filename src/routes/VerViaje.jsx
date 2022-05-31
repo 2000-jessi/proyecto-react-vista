@@ -1,4 +1,5 @@
 import React from 'react'
+import Form from '../components/Form'
 
 const VerViaje = () => {
 
@@ -7,6 +8,7 @@ const VerViaje = () => {
 
 
   const [loading, setLoading] = React.useState(true)
+  const [editing, setEditing] = React.useState(true)
   const [dataAPI, setDataAPI] = React.useState([])
 
   React.useEffect(() => {
@@ -67,6 +69,9 @@ const VerViaje = () => {
           </tbody>
         </table>
       </div>
+      {
+        editing && <Form />
+      }
     </div>
   )
 }
