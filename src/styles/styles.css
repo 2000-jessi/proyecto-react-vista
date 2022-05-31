@@ -141,6 +141,7 @@ input:focus~label,
 input:valid~label{
     position: absolute;
     top: -14px;
+    left: -2px;
     font-size: 14px;
     color: #455A64;
 }
@@ -202,7 +203,7 @@ body::-webkit-scrollbar-thumb {
 .contenedor-verviaje{
     padding-top: 50px;
     width: 100%;
-    height: 1000px;
+    height: 2500px;
     display: flex;
     flex-direction: column;
     align-items: center;

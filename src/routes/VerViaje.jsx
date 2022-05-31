@@ -69,10 +69,14 @@ const VerViaje = () => {
           </tbody>
         </table>
       </div>
+      <div>
       {
         editing && <Form />
       }
     </div>
+    </div>
+    
+     
   )
 }
 
