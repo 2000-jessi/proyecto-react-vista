@@ -27,8 +27,16 @@ const VerViaje = () => {
   }, [])
 
   const editarRegistro = (data) => {
-    setEditing(true)
-    setStatesValues(data)
+    if (statesValues != {}) {
+      setStatesValues({})
+      setEditing(false)
+      console.log(statesValues)
+    }
+    setTimeout(() => {
+      setEditing(true)
+      setStatesValues(data)
+      console.log(statesValues)
+    }, 250)
   }
 
   return (
@@ -82,21 +90,22 @@ const VerViaje = () => {
         </table>
       </div>
       <div>
-      {
-        editing && <Form
-          method={"POST"}
-          p_nombreCompleto={statesValues.nombre}
-          p_cantidad={statesValues.cantidadPersonas}
-          p_origen={statesValues.origen}
-          p_destino={statesValues.destino}
-          p_clase={statesValues.clase}
-          p_fechaIda={Date.parse(statesValues.fechaIda)}
-          p_fechaVuelta={Date.parse(statesValues.fechaIda)} />
-      }
+        {
+          editing && <Form
+            method={"PATCH"}
+            id={statesValues.id}
+            p_nombreCompleto={statesValues.nombre}
+            p_cantidad={statesValues.cantidadPersonas}
+            p_origen={statesValues.origen}
+            p_destino={statesValues.destino}
+            p_clase={statesValues.clase}
+            p_fechaIda={statesValues.fechaIda}
+            p_fechaVuelta={statesValues.fechaIda} />
+        }
+      </div>
     </div>
-    </div>
-    
-     
+
+
   )
 }
 

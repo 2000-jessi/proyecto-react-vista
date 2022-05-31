@@ -3,6 +3,7 @@ import React from 'react'
 const Form = ({
 
     method,
+    id,
     p_nombreCompleto,
     p_cantidad,
     p_origen,
@@ -29,10 +30,34 @@ const Form = ({
                 origen: origen,
                 destino: destino,
                 clase: clase,
-                fechaIda: new Date(fechaIda),
-                fechaVuelta: new Date(fechaVuelta)
+                fechaIda: fechaIda,
+                fechaVuelta: fechaVuelta
             }
             await fetch(Api, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(obj)
+            })
+
+        } else {
+            alert("Falta llenar campos")
+        }
+    }
+
+    const editrViaje = async () => {
+        if (nombreCompleto.trim() !== "" && cantidad > 0 && origen !== "" && destino !== "" && clase !== "") {
+            const obj = {
+                nombre: nombreCompleto,
+                cantidadPersonas: cantidad,
+                origen: origen,
+                destino: destino,
+                clase: clase,
+                fechaIda: fechaIda,
+                fechaVuelta: fechaVuelta
+            }
+            await fetch(`${Api}/${id}`, {
                 method: method,
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
@@ -86,7 +111,7 @@ const Form = ({
                         </div>
                         <div className="grupo">
                             <input
-                                typeName="text"
+                                type="text"
                                 name="txtDestino"
                                 value={destino}
                                 onChange={event => { setDestino(event.target.value) }}
@@ -121,10 +146,19 @@ const Form = ({
                             <label>Fecha de Vuelta</label>
                         </div>
                         <div className="boton-guardar">
-                            <button
-                                type='button'
-                                onClick={registrarViaje}
-                            >Guardar</button>
+                            {
+                                method == "POST" ?
+                                    <button
+                                        type='button'
+                                        onClick={registrarViaje}
+                                    >Guardar</button>
+                                    :
+
+                                    <button
+                                        type='button'
+                                        onClick={editrViaje}
+                                    >Guardar Cambios</button>
+                            }
                         </div>
                     </div>
                 </form>

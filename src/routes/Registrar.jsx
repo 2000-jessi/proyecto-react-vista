@@ -6,6 +6,7 @@ const Registrar = () => {
     return (
         <div className="banner">
             <Form
+                id={""}
                 method={"POST"}
                 p_nombreCompleto={""}
                 p_cantidad={0}
