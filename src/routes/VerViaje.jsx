@@ -46,7 +46,7 @@ const VerViaje = () => {
 
               !loading && dataAPI.map(data => {
                 return (
-                  <tr>
+                  <tr key={data.id}>
                     <td>{data.nombre}</td>
                     <td>{data.cantidadPersonas}</td>
                     <td>{data.origen}</td>
