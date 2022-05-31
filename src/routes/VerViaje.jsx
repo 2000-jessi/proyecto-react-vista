@@ -39,6 +39,16 @@ const VerViaje = () => {
     }, 250)
   }
 
+  const eliminarRegsitro = async (id) => {
+    try {
+      await fetch(`${Api}/${id}`, {
+        method: "DELETE"
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div className="contenedor-verviaje">
       <h1><i className="fas fa-user-check"></i> USUARIOS</h1>
@@ -80,7 +90,13 @@ const VerViaje = () => {
                       </button>
                     </td>
                     <td>
-                      <button type='button' className="boton-eliminar"><i className="fas fa-trash-alt"></i></button>
+                      <button
+                        type='button'
+                        className="boton-eliminar"
+                        onClick={() => { eliminarRegsitro(data.id) }}
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                      </button>
                     </td>
                   </tr>
                 )
