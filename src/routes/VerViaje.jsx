@@ -4,16 +4,23 @@ const VerViaje = () => {
 
 
   const Api = "https://api-react-firebase.herokuapp.com/api/reservations"
-  let dataAPI = []
 
-  React.useEffect(async () => {
-    try {
-      const response = await fetch(Api)
-      const data = await response.json()
-      dataAPI = data
-    } catch (error) {
-      console.log(error)
+
+  const [loading, setLoading] = React.useState(true)
+  const [dataAPI, setDataAPI] = React.useState([])
+
+  React.useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(Api)
+        const data = await response.json()
+        setDataAPI([...data.body])
+        setLoading(false)
+      } catch (error) {
+        console.log(error)
+      }
     }
+    getData()
   }, [])
 
   return (
@@ -35,36 +42,28 @@ const VerViaje = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Jessica Lilian Becerra</td>
-              <td>4</td>
-              <td>Canada</td>
-              <td>Ciudad de Mexico</td>
-              <td>Business</td>
-              <td>2021</td>
-              <td>2024</td>
-              <td>
-                <button type='button' className="boton-editar"><i className="fas fa-edit"></i></button>
-              </td>
-              <td>
-                <button type='button' className="boton-eliminar"><i className="fas fa-trash-alt"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Jessica Lilian Becerra</td>
-              <td>4</td>
-              <td>Canada</td>
-              <td>Ciudad de Mexico</td>
-              <td>Business</td>
-              <td>2021</td>
-              <td>2024</td>
-              <td>
-                <button type='button' className="boton-editar"><i className="fas fa-edit"></i></button>
-              </td>
-              <td>
-                <button type='button' className="boton-eliminar"><i className="fas fa-trash-alt"></i></button>
-              </td>
-            </tr>
+            {
+
+              !loading && dataAPI.map(data => {
+                return (
+                  <tr>
+                    <td>{data.nombre}</td>
+                    <td>{data.cantidadPersonas}</td>
+                    <td>{data.origen}</td>
+                    <td>{data.destino}</td>
+                    <td>{data.clase}</td>
+                    <td>{data.fechaIda}</td>
+                    <td>{data.fechaVuelta}</td>
+                    <td>
+                      <button type='button' className="boton-editar"><i className="fas fa-edit"></i></button>
+                    </td>
+                    <td>
+                      <button type='button' className="boton-eliminar"><i className="fas fa-trash-alt"></i></button>
+                    </td>
+                  </tr>
+                )
+              })
+            }
           </tbody>
         </table>
       </div>

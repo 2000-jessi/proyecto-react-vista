@@ -3,7 +3,7 @@ import React from 'react'
 const Registrar = () => {
 
     const [nombreCompleto, setNombreCompleto] = React.useState("")
-    const [cantidad, setCantidad] = React.useState(null)
+    const [cantidad, setCantidad] = React.useState(0)
     const [origen, setOrigen] = React.useState("")
     const [destino, setDestino] = React.useState("")
     const [clase, setClase] = React.useState("")
@@ -13,7 +13,7 @@ const Registrar = () => {
     const Api = "https://api-react-firebase.herokuapp.com/api/reservations"
 
     const registrarViaje = async () => {
-        if (nombreCompleto.trim() !== "" && cantidad.trim() !== null && origen !== "" && destino !== "" && clase !== "") {
+        if (nombreCompleto.trim() !== "" && cantidad > 0 && origen !== "" && destino !== "" && clase !== "") {
             const obj = {
                 nombre: nombreCompleto,
                 cantidadPersonas: cantidad,
