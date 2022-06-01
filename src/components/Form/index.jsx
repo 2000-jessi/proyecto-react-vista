@@ -102,7 +102,13 @@ const Form = ({
             setFechaVuelta("")
             setEditing(false)
         } else {
-            alert("Falta llenar campos")
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'No has llenado todos los campos',
+                showConfirmButton: false,
+                timer: 1500
+            })
         }
     }
 
