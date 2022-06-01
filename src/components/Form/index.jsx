@@ -1,4 +1,5 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 
 const Form = ({
 
@@ -11,6 +12,7 @@ const Form = ({
     p_clase,
     p_fechaIda,
     p_fechaVuelta,
+    setEditing
 }) => {
     const [nombreCompleto, setNombreCompleto] = React.useState(p_nombreCompleto)
     const [cantidad, setCantidad] = React.useState(p_cantidad)
@@ -40,13 +42,33 @@ const Form = ({
                 },
                 body: JSON.stringify(obj)
             })
-
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '¡Excelente! se ha añadido tu reservación',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setNombreCompleto("")
+            setCantidad(0)
+            setOrigen("")
+            setDestino("")
+            setClase("")
+            setFechaIda("")
+            setFechaVuelta("")
         } else {
-            alert("Falta llenar campos")
+
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'No has llenado todos los campos',
+                showConfirmButton: false,
+                timer: 1500
+            })
         }
     }
 
-    const editrViaje = async () => {
+    const editarViaje = async () => {
         if (nombreCompleto.trim() !== "" && cantidad > 0 && origen !== "" && destino !== "" && clase !== "") {
             const obj = {
                 nombre: nombreCompleto,
@@ -64,7 +86,21 @@ const Form = ({
                 },
                 body: JSON.stringify(obj)
             })
-
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '¡Excelente! se han añadido tus cambios',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setNombreCompleto("")
+            setCantidad(0)
+            setOrigen("")
+            setDestino("")
+            setClase("")
+            setFechaIda("")
+            setFechaVuelta("")
+            setEditing(false)
         } else {
             alert("Falta llenar campos")
         }
@@ -147,7 +183,7 @@ const Form = ({
                         </div>
                         <div className="boton-guardar">
                             {
-                                method == "POST" ?
+                                method != "PATCH" ?
                                     <button
                                         type='button'
                                         onClick={registrarViaje}
@@ -156,7 +192,7 @@ const Form = ({
 
                                     <button
                                         type='button'
-                                        onClick={editrViaje}
+                                        onClick={editarViaje}
                                     >Guardar Cambios</button>
                             }
                         </div>
