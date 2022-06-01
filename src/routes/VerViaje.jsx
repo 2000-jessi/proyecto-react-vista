@@ -1,5 +1,7 @@
 import React from 'react'
 import Form from '../components/Form'
+import Swal from 'sweetalert2'
+
 
 const VerViaje = () => {
 
@@ -11,6 +13,7 @@ const VerViaje = () => {
   const [editing, setEditing] = React.useState(false)
   const [statesValues, setStatesValues] = React.useState({})
   const [dataAPI, setDataAPI] = React.useState([])
+  const [stateDelete, setStateDelete] = React.useState(false)
 
   React.useEffect(() => {
     const getData = async () => {
@@ -24,7 +27,7 @@ const VerViaje = () => {
       }
     }
     getData()
-  }, [])
+  }, [editing, stateDelete])
 
   const editarRegistro = (data) => {
     if (statesValues != {}) {
@@ -40,12 +43,44 @@ const VerViaje = () => {
   }
 
   const eliminarRegsitro = async (id) => {
-    try {
-      await fetch(`${Api}/${id}`, {
-        method: "DELETE"
-      })
-    } catch (error) {
-      console.error(error)
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡Esto no se podrá revertir!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Estoy seguro',
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        eliminar()
+      }
+    })
+
+    const eliminar = async () => {
+      try {
+        await fetch(`${Api}/${id}`, {
+          method: "DELETE"
+        })
+        setStateDelete(!stateDelete)
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '¡Bien! has elimando el registro',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      } catch (error) {
+
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: 'Ups! disculpa hubo un error :c',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     }
   }
 
@@ -116,7 +151,8 @@ const VerViaje = () => {
             p_destino={statesValues.destino}
             p_clase={statesValues.clase}
             p_fechaIda={statesValues.fechaIda}
-            p_fechaVuelta={statesValues.fechaIda} />
+            p_fechaVuelta={statesValues.fechaIda}
+            setEditing={setEditing} />
         }
       </div>
     </div>
