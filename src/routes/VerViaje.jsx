@@ -1,6 +1,7 @@
 import React from 'react'
 import Form from '../components/Form'
 import Swal from 'sweetalert2'
+import Img from "../images/img.png"
 
 
 const VerViaje = () => {
@@ -14,12 +15,18 @@ const VerViaje = () => {
   const [statesValues, setStatesValues] = React.useState({})
   const [dataAPI, setDataAPI] = React.useState([])
   const [stateDelete, setStateDelete] = React.useState(false)
+  const [isEmpty, setIsEmpty] = React.useState(false)
 
   React.useEffect(() => {
     const getData = async () => {
       try {
         const response = await fetch(Api)
         const data = await response.json()
+        if (data.body.length == 0) {
+          setIsEmpty(true)
+        } else {
+          setIsEmpty(false)
+        }
         setDataAPI([...data.body])
         setLoading(false)
       } catch (error) {
@@ -27,7 +34,7 @@ const VerViaje = () => {
       }
     }
     getData()
-  }, [editing, stateDelete])
+  }, [editing, stateDelete, isEmpty])
 
   const editarRegistro = (data) => {
     if (statesValues != {}) {
@@ -139,6 +146,13 @@ const VerViaje = () => {
             }
           </tbody>
         </table>
+
+        {
+          isEmpty && <div className='img-sin-registros'>
+            <p>No hay registros aún</p>
+            <img src={Img} />
+          </div>
+        }
       </div>
       <div>
         {

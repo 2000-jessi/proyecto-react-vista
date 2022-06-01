@@ -276,3 +276,29 @@ td {
     font-size: 13px;
   }
 }
+
+/*IMAGEN SIN REGISTROS*/
+
+.img-sin-registros {
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 10px;
+}
+
+.img-sin-registros p {
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+.img-sin-registros img {
+  width: 50%;
+}
+
+@media screen and (min-width: 768px) {
+  .img-sin-registros img {
+    width: 500px;
+  }
+}
