@@ -151,7 +151,7 @@ const VerViaje = () => {
             p_destino={statesValues.destino}
             p_clase={statesValues.clase}
             p_fechaIda={statesValues.fechaIda}
-            p_fechaVuelta={statesValues.fechaIda}
+            p_fechaVuelta={statesValues.fechaVuelta}
             setEditing={setEditing} />
         }
       </div>
